@@ -25,9 +25,18 @@ Car.prototype = {
 	speedDecay: 0.98,
 	maxSpeed: 4,
 	backSpeed: 1.1,
+	energyReserve: 10000,
 
 
 	isMoving: function (speed) {
+		if (this.speed > 2) {
+			this.energyReserve = this.energyReserve - 10;
+		}
+
+		if (this.speed < 2 && this.speed > 0.4) {
+			this.energyReserve = this.energyReserve - 1;
+		}
+		
 		return !(this.speed > -0.4 && this.speed < 0.4);
 	},
 	getCenter: function(){

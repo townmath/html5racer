@@ -9,7 +9,9 @@ var canvas   = document.getElementById('canvas'),
 	trackHit = new Image(),
 
 	elPX     = document.getElementById('px'),
-	elPY     = document.getElementById('py')
+	elPY     = document.getElementById('py'),
+	elPE     = document.getElementById('pe'),
+	elPS     = document.getElementById('ps')
 ;
 
 track.src = "track.png";
@@ -48,6 +50,7 @@ function step (car) {
 		// constantly decrease speed
 		if (!car.isMoving()){
 			car.speed = 0;
+			// car.speed = 0.5;
 		} else {
 			car.speed *= car.speedDecay;
 		}
@@ -80,6 +83,8 @@ function step (car) {
 		// info
 		elPX.innerHTML = Math.floor(car.x);
 		elPY.innerHTML = Math.floor(car.y);
+		elPE.innerHTML = Math.floor(car.energyReserve);
+		elPS.innerHTML = Math.floor(car.speed);
 	}
 }
 function draw (car) {
