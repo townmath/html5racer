@@ -11,11 +11,13 @@ var canvas   = document.getElementById('canvas'),
 	elPX     = document.getElementById('px'),
 	elPY     = document.getElementById('py'),
 	elPE     = document.getElementById('pe'),
-	elPS     = document.getElementById('ps')
+	elPS     = document.getElementById('ps'),
+	elSG	 = document.getElementById('sg')
+
 ;
 
-track.src = "track.png";
-trackHit.src = "track-hit.png";
+track.src = "track2.png";
+trackHit.src = "track2-hit.png";
 
 // collision
 var hit = new HitMap(trackHit);
@@ -85,6 +87,7 @@ function step (car) {
 		elPY.innerHTML = Math.floor(car.y);
 		elPE.innerHTML = Math.floor(car.energyReserve);
 		elPS.innerHTML = Math.floor(car.speed);
+		elSG.innerHTML = car.segment;
 	}
 }
 function draw (car) {
