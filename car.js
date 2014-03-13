@@ -15,20 +15,23 @@ function Car () {
 	};
 }
 Car.prototype = {
-	x: 870,
+	x: 670,
 	y: 370,
 	code: 'player',
 	acceleration: 1.1,
 	rotationStep: 4,
-	rotation: 350,
+	rotation: 270,
 	speed: 0,
 	speedDecay: 0.98,
 	maxSpeed: 4,
 	backSpeed: 1.1,
 	energyReserve: 10000,
+	segment: 1,
 
 
 	isMoving: function (speed) {
+		this.getSegment();
+
 		if (this.speed > 2) {
 			this.energyReserve = this.energyReserve - 10;
 		}
@@ -79,6 +82,21 @@ Car.prototype = {
 		if (this.isMoving()){
 			this.rotation += this.rotationStep * (this.speed/this.maxSpeed);
 		}
+	},
+	getSegment: function(){
+		if ( this.x < 700 && this.x > 268 && this.y < 420 ) {
+			this.segment = 1;
+		}
+		if ( this.x < 268 && this.y > 270 ) {
+			this.segment = 2;
+		}
+		if ( this.x < 700 && this.x > 268 && this.y > 450 ) {
+			this.segment = 3;
+		}
+		if ( this.x > 700 && this.y > 270 ) {
+			this.segment = 4;
+		}
+
 	}
 
 };
