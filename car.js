@@ -25,7 +25,7 @@ Car.prototype = {
 	speedDecay: 0.98,
 	maxSpeed: 4,
 	backSpeed: 1.1,
-	energyReserve: 10000,
+	energyReserve: 7000,
 	segment: 1,
 
 
