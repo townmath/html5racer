@@ -11,6 +11,7 @@
 				display: block;
 				border: solid 5px #444;
 				margin: 0 auto;
+				border: 1px solid white;
 			}
 			#info {
 				/*display: none;*/
@@ -23,22 +24,24 @@
 			<h1>Green Button Racers!</h1>
 		</div>
 
-		<div id="info">
-			<div>Riley Wildcats</div>
-			x: <span id="px">0</span> 
-			y: <span id="py"></span> <br>
-			
-			speed: <span id="ps"></span> <br>
-			energy: <span id="pe"></span><br>
-			segment <span id="sg"></span><br>
-			curve: <span id="tc"></span>
-		</div>
 		<canvas id="canvas" width="1000" height="700"></canvas>
 		
-		<script src="jquery.js"></script>
-		<script src="helpers.js"></script>
-		<script src="collision.js"></script>
-		<script src="car.js"></script>
-		<script src="racer.js"></script>
+		<script>
+			
+			var canvas = document.getElementById("canvas");
+			context = canvas.getContext("2d");
+			
+			context.lineWidth = 6;
+			context.strokeStyle = "#bbb";
+			context.beginPath();
+			sx = 0;
+			sx = - 60;
+			sy = 200;
+
+			context.moveTo(269+sx, 392+sy);
+			context.bezierCurveTo(84+sx, 388+sy, 83+sx, 141+sy, 266+sx, 142+sy);
+			context.stroke();
+
+		</script>
 	</body>
 </html>
