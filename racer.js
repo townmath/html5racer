@@ -7,6 +7,7 @@ var canvas   = document.getElementById('canvas'),
 	player   = new Car(),
 	player2	 = new Car();
 	player2.x -= 40;
+	player2.segment = 3;
 	track    = new Image(),
 	trackHit = new Image(),
 
@@ -118,7 +119,7 @@ function stepT(t) {
 	t += speed;
 	return t;
 }
-function drawCurve2(t, p0, p1, p2, p3, player) {
+function drawCurve2(t, p0, p1, p2, p3, car) {
 	// p0, p1, p2, p3 define points for bezier curve
 	var at = 1 - t;
 	var green1x = p0.x * t + p1.x * at;
@@ -140,23 +141,23 @@ function drawCurve2(t, p0, p1, p2, p3, player) {
 	// context.fillStyle = 'red';
 	// context.fill();
 	// context.closePath();
-	player.x = 	finalx;
-	player.y = finaly;
-	player.energyReserve -= 10;
-	if ( player.x < 270 ) {
-		player.rotation = player.rotation - (2.7333*at);
+	car.x = 	finalx;
+	car.y = finaly;
+	car.energyReserve -= 10;
+	if ( car.x < 270 ) {
+		car.rotation = car.rotation - (2.7333*at);
 		return;
 	}
-	if ( player.x > 700 ) {
-		player.rotation = player.rotation - (2.4333*at);
+	if ( car.x > 700 ) {
+		car.rotation = car.rotation - (2.4333*at);
 		return;
 	}
-	if ( player.x > 270 && player.y > 550) {
-		player.rotation = 90;
+	if ( car.x > 270 && car.y > 550) {
+		car.rotation = 90;
 		return;
 	}
-	if ( player.x > 270 && player.y < 550) {
-		player.rotation = 270;
+	if ( car.x > 270 && car.y < 550) {
+		car.rotation = 270;
 		return;
 	}
 
@@ -175,73 +176,136 @@ $(window).keyup(function(e){
 		// e.preventDefault();
 	}
 });
+function selfDrive(car) {
+	
+	if ( car.segment == 5 ) car.segment = 1;
+	
+	if ( car.segment == 1 && car.energyReserve > 0) {
+		var p0 = {"x": 268, "y": 362};
+		var p1 = {"x": 268, "y": 362};
+		var p2 = {"x": 700, "y": 362};
+		var p3 = {"x": 700, "y": 362};
+		drawCurve2(t, p0, p1, p2, p3, car);
+		if (t >= 0.98) {
+			t = 0;
+			car.segment = 2;
+		}
+	}
+	if ( car.segment == 2 && car.energyReserve > 0) {
+		var p0 = {"x": 268, "y": 592};
+		var p1 = {"x": 124, "y": 598};
+		var p2 = {"x": 123, "y": 351};
+		var p3 = {"x": 268, "y": 362};
+		drawCurve2(t, p0, p1, p2, p3, car);
+		if (t >= 0.98) {
+			t = 0;
+			car.segment = 3;
+		}
+	}
+	if ( car.segment == 3 && car.energyReserve > 0) {
+		var p0 = {"x": 700, "y": 598};
+		var p1 = {"x": 700, "y": 598};
+		var p2 = {"x": 268, "y": 598};
+		var p3 = {"x": 268, "y": 598};
+		drawCurve2(t, p0, p1, p2, p3, car);
+		if (t >= 0.9) {
+			t = 0;
+			car.segment = 4;
+		}
+	}
+	if ( car.segment == 4 && car.energyReserve > 0) {
+		var p3 = {"x": 309+400, "y": 592};
+		var p2 = {"x": 124+800, "y": 598};
+		var p1 = {"x": 123+800, "y": 351};
+		var p0 = {"x": 306+400, "y": 362};
+		drawCurve2(t, p0, p1, p2, p3, car);
+		if (t >= 0.9) {
+			t = 0;
+			car.segment = 5;
+		}
+	}
+	if ( car.segment == 5 && car.energyReserve > 0) {
+		var p0 = {"x": 268, "y": 362};
+		var p1 = {"x": 268, "y": 362};
+		var p2 = {"x": 700, "y": 362};
+		var p3 = {"x": 700, "y": 362};
+		drawCurve2(t, p0, p1, p2, p3, car);
+		if (t >= 0.98) {
+			t = 0;
+			car.segment = 2;
+		}
+	}
+}
 
 function frame () {
 	step(player);
+	step(player2);
 	drawTrack();
 	drawCar(player);
 	drawCar(player2);
 	
 	// drawCurve();
-	t = stepT(t,speed);
-
-	if ( player.segment == 5 ) player.segment = 1;
+	t = stepT(t, speed);
+	selfDrive(player);
+	selfDrive(player2);
 	
-	if ( player.segment == 1 && player.energyReserve > 0) {
-		var p0 = {"x": 268, "y": 362};
-		var p1 = {"x": 268, "y": 362};
-		var p2 = {"x": 700, "y": 362};
-		var p3 = {"x": 700, "y": 362};
-		drawCurve2(t, p0, p1, p2, p3, player);
-		if (t >= 0.98) {
-			t = 0;
-			player.segment = 2;
-		}
-	}
-	if ( player.segment == 2 && player.energyReserve > 0) {
-		var p0 = {"x": 268, "y": 592};
-		var p1 = {"x": 124, "y": 598};
-		var p2 = {"x": 123, "y": 351};
-		var p3 = {"x": 268, "y": 362};
-		drawCurve2(t, p0, p1, p2, p3, player);
-		if (t >= 0.98) {
-			t = 0;
-			player.segment = 3;
-		}
-	}
-	if ( player.segment == 3 && player.energyReserve > 0) {
-		var p0 = {"x": 700, "y": 598};
-		var p1 = {"x": 700, "y": 598};
-		var p2 = {"x": 268, "y": 598};
-		var p3 = {"x": 268, "y": 598};
-		drawCurve2(t, p0, p1, p2, p3, player);
-		if (t >= 0.9) {
-			t = 0;
-			player.segment = 4;
-		}
-	}
-	if ( player.segment == 4 && player.energyReserve > 0) {
-		var p3 = {"x": 309+400, "y": 592};
-		var p2 = {"x": 124+800, "y": 598};
-		var p1 = {"x": 123+800, "y": 351};
-		var p0 = {"x": 306+400, "y": 362};
-		drawCurve2(t, p0, p1, p2, p3, player);
-		if (t >= 0.9) {
-			t = 0;
-			player.segment = 5;
-		}
-	}
-	if ( player.segment == 5 && player.energyReserve > 0) {
-		var p0 = {"x": 268, "y": 362};
-		var p1 = {"x": 268, "y": 362};
-		var p2 = {"x": 700, "y": 362};
-		var p3 = {"x": 700, "y": 362};
-		drawCurve2(t, p0, p1, p2, p3, player);
-		if (t >= 0.98) {
-			t = 0;
-			player.segment = 2;
-		}
-	}
+	// if ( player.segment == 5 ) player.segment = 1;
+	
+	// if ( player.segment == 1 && player.energyReserve > 0) {
+	// 	var p0 = {"x": 268, "y": 362};
+	// 	var p1 = {"x": 268, "y": 362};
+	// 	var p2 = {"x": 700, "y": 362};
+	// 	var p3 = {"x": 700, "y": 362};
+	// 	drawCurve2(t, p0, p1, p2, p3, player);
+	// 	if (t >= 0.98) {
+	// 		t = 0;
+	// 		player.segment = 2;
+	// 	}
+	// }
+	// if ( player.segment == 2 && player.energyReserve > 0) {
+	// 	var p0 = {"x": 268, "y": 592};
+	// 	var p1 = {"x": 124, "y": 598};
+	// 	var p2 = {"x": 123, "y": 351};
+	// 	var p3 = {"x": 268, "y": 362};
+	// 	drawCurve2(t, p0, p1, p2, p3, player);
+	// 	if (t >= 0.98) {
+	// 		t = 0;
+	// 		player.segment = 3;
+	// 	}
+	// }
+	// if ( player.segment == 3 && player.energyReserve > 0) {
+	// 	var p0 = {"x": 700, "y": 598};
+	// 	var p1 = {"x": 700, "y": 598};
+	// 	var p2 = {"x": 268, "y": 598};
+	// 	var p3 = {"x": 268, "y": 598};
+	// 	drawCurve2(t, p0, p1, p2, p3, player);
+	// 	if (t >= 0.9) {
+	// 		t = 0;
+	// 		player.segment = 4;
+	// 	}
+	// }
+	// if ( player.segment == 4 && player.energyReserve > 0) {
+	// 	var p3 = {"x": 309+400, "y": 592};
+	// 	var p2 = {"x": 124+800, "y": 598};
+	// 	var p1 = {"x": 123+800, "y": 351};
+	// 	var p0 = {"x": 306+400, "y": 362};
+	// 	drawCurve2(t, p0, p1, p2, p3, player);
+	// 	if (t >= 0.9) {
+	// 		t = 0;
+	// 		player.segment = 5;
+	// 	}
+	// }
+	// if ( player.segment == 5 && player.energyReserve > 0) {
+	// 	var p0 = {"x": 268, "y": 362};
+	// 	var p1 = {"x": 268, "y": 362};
+	// 	var p2 = {"x": 700, "y": 362};
+	// 	var p3 = {"x": 700, "y": 362};
+	// 	drawCurve2(t, p0, p1, p2, p3, player);
+	// 	if (t >= 0.98) {
+	// 		t = 0;
+	// 		player.segment = 2;
+	// 	}
+	// }
 	
 	window.requestAnimationFrame(frame);
 
