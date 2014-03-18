@@ -27,6 +27,7 @@ Car.prototype = {
 	energyReserve: 7000,
 	segment: 1,
 	time: 0,
+	offset: 0, //offset allows the cars to be in different lanes
 
 
 	isMoving: function (speed) {
