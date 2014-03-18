@@ -1,4 +1,3 @@
-
 function Car () {
 	this.img = new Image();   // Create new img element
 	this.img.onload = function(){
@@ -27,10 +26,11 @@ Car.prototype = {
 	backSpeed: 1.1,
 	energyReserve: 7000,
 	segment: 1,
+	time: 0,
 
 
 	isMoving: function (speed) {
-		this.getSegment();
+		//this.getSegment();
 
 		if (this.speed > 2) {
 			this.energyReserve = this.energyReserve - 10;
