@@ -1,3 +1,4 @@
+
 function Car () {
 	this.img = new Image();   // Create new img element
 	this.img.onload = function(){
@@ -14,13 +15,13 @@ function Car () {
 	};
 }
 Car.prototype = {
-	x: 670,
-	y: 370,
+	x: 730,
+	y: 385,
 	code: 'player',
 	acceleration: 1.1,
 	rotationStep: 4,
 	rotation: 270,
-	speed: 0,
+	speed: .009,
 	speedDecay: 0.98,
 	maxSpeed: 4,
 	backSpeed: 1.1,
