@@ -111,11 +111,12 @@ function drawCurve2(p0, p1, p2, p3, car) {
 	var finaly = blue1y * t + blue2y * at;
 	// color reference for above http://en.wikipedia.org/wiki/File:Bezier_3_big.gif
 
+	var rotationRate=3.2*car.speed/0.009 //3.2 was guess and checked to be the correct rotation speed for car speed of .009, so I need to adjust for different speeds
 	car.x = finalx;
 	car.y = finaly;
-	car.energyReserve -= 10;
+	car.energyReserve -= .28*Math.pow((car.speed*1000-5),2)+3; //ideal speed of 5, grows quadratically as you move away from .005
 	if ( car.x < 270 || car.x > 750) {
-		car.rotation = car.rotation - (3.2*at);
+		car.rotation = car.rotation - (rotationRate*at);
 		return;
 	}
 	if ( car.x > 270 && car.y > 550) {
@@ -201,14 +202,20 @@ function frame () {
 		stepT(player1);
 		selfDrive(player1);
 	}
-	else player1.speed=0;
+	else {
+		player1.speed=0;
+		player1.energyReserve=0;
+	}
 	//car 2
 	drawCar(player2);
 	if (player2.energyReserve>0){
 		stepT(player2);
 		selfDrive(player2);
 	}
-	else player2.speed=0;
+	else {
+		player2.speed=0;
+		player2.energyReserve=0;
+	}
 	
 	window.requestAnimationFrame(frame);
 
@@ -217,5 +224,6 @@ function frame () {
 player1.offset=0; //lane 1
 player2.offset=20;//lane 2
 //player3.offset=40;//lane 3
-//player2.speed=.005;
+player2.speed=.005;
 frame();
+
