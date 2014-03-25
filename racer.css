@@ -1,10 +1,10 @@
-#info {
+#infoCar1 {
 
 	position: absolute;
 	top: 140px;
 	left: 300px;
 	width: 130px;
-	height: 100px;
+	height: 120px;
 	border: 2px solid white;
 	background-color: #333;
 	padding: 12px 12px 12px 12px;
@@ -14,7 +14,27 @@
 	border-radius: 12px;
 }
 
-#info span {
+#infoCar1 span {
+	color: white;
+}
+
+#infoCar2 {
+
+	position: absolute;
+	top: 300px;
+	left: 300px;
+	width: 130px;
+	height: 120px;
+	border: 2px solid white;
+	background-color: #333;
+	padding: 12px 12px 12px 12px;
+	font-family: arial;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+}
+
+#infoCar2 span {
 	color: white;
 }
 
