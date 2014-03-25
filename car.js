@@ -1,4 +1,3 @@
-
 function Car () {
 	this.img = new Image();   // Create new img element
 	this.img.onload = function(){
@@ -29,6 +28,8 @@ Car.prototype = {
 	segment: 1,
 	time: 0,
 	offset: 0, //offset allows the cars to be in different lanes
+	distance: 0,
+	curve: 0,
 
 
 	isMoving: function (speed) {
@@ -102,4 +103,3 @@ Car.prototype = {
 	}
 
 };
-
