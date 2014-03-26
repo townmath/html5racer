@@ -18,6 +18,16 @@
 	color: white;
 }
 
+#infoCar1 h2 {
+	color: #4a4c71;
+	font-size: 100%;
+	display: table-cell;
+	width: 130px;
+	height: 20px;
+	vertical-align:top;
+	text-align: left;
+}
+
 #infoCar2 {
 
 	position: absolute;
@@ -38,12 +48,22 @@
 	color: white;
 }
 
+#infoCar2 h2 {
+	color: #be4251;
+	font-size: 95%;
+	display: table-cell;
+	width: 130px;
+	height: 20px;
+	vertical-align:top;
+	text-align: left;
+}
+
 #title {
 	position: absolute;
 	top: 30px;
 	left: 515px;
 	width: 350px;
-	height: 70px;
+	height: 140px;
 	border: 2px solid white;
 	background-color: #eee;
 	padding: 4px 4px 4px 4px;
@@ -58,4 +78,47 @@
 	color: green;
 	text-align: center;
 	background-color: #eee;
+}
+
+#title h2 {
+	color: green;
+	text-align: center;
+	background-color: #eee;
+	font-size:95%;
+}
+
+#versus {
+	position: absolute;
+	top: 460px;
+	left: 943px;
+	width: 50px;
+	height: 50px;
+	border: 2px solid green;
+	background-color: #eee;
+	padding: 0px 0px 0px 0px;
+	font-family: arial;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+}
+
+#versus h1{
+	color: green;
+	display:table-cell;
+	width: 50px;
+	height: 50px;
+	vertical-align:middle;
+	text-align: center;
+}
+
+#instructions {
+	position: absolute;
+	top: 665px;
+	left: 880px;
+	width: 350px;
+	height: 50px;
+}
+
+#instructions span {
+	color: white
 }
