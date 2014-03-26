@@ -10,6 +10,7 @@ var canvas   = document.getElementById('canvas'),
 	track    = new Image(),
 	trackHit = new Image(),
 	
+	
 //	elPX     = document.getElementById('px'),
 //	elPY     = document.getElementById('py'),
 	//car 1 data
@@ -36,16 +37,20 @@ var key = {
 	UP: 38,
 	DOWN: 40,
 	LEFT: 37,
-	RIGHT: 39
+	RIGHT: 39,
+	SPACE: 32
 };
 
 var keys = {
 	38: false,
 	40: false,
 	37: false,
-	39: false
+	39: false,
+	32: false
 };
 
+var keyPause = false;
+var	realPause = true;
 
 function speedXY (rotation, speed) {
 	return {
@@ -69,9 +74,11 @@ function step (car1,car2) {
 		car1.time+=.05;
 		car2.time+=.05;
 }
-function drawTrack () {
+function drawTrack (car1,car2) {
 	context.clearRect(0,0,ctxW,ctxH);
 	context.drawImage(track, 0, 0);
+	context.drawImage(car1.logo, 360, 425, 100, 100);
+	context.drawImage(car2.logo, 560, 425, 100, 100);
 }
 function drawCar (car) {
 	drawRotatedImage(car.img, car.x, car.y, car.rotation);
@@ -130,17 +137,27 @@ function drawCurve2(p0, p1, p2, p3, car) {
 
 }
 
+function pause(){
+	keyPause=false;
+	realPause=!realPause;
+//	if (realPause == true) realPause=false;
+//	else realPause=true;
+}
+
 // Keyboard event listeners
 $(window).keydown(function(e){
 	if (keys[e.keyCode] !== 'undefined'){
 		keys[e.keyCode] = true;
-		// e.preventDefault();
+		e.preventDefault();
+		if (e.keyCode==key.SPACE) keyPause=true; 
 	}
 });
 $(window).keyup(function(e){
 	if (keys[e.keyCode] !== 'undefined'){
 		keys[e.keyCode] = false;
-		// e.preventDefault();
+		e.preventDefault();
+		if (keyPause==true) pause();
+			
 	}
 });
 function selfDrive(car) {
@@ -194,36 +211,41 @@ function selfDrive(car) {
 }
 
 function frame () {
-	step(player1, player2);
-	drawTrack();
-	//car 1
-	drawCar(player1);
-	if (player1.energyReserve>0){
-		stepT(player1);
-		selfDrive(player1);
+	if (realPause==false) {
+		step(player1, player2);
+		drawTrack(player1, player2);
+		//car 1
+		drawCar(player1);
+		if (player1.energyReserve>0){
+			stepT(player1);
+			selfDrive(player1);
+		}
+		else {
+			player1.speed=0;
+			player1.energyReserve=0;
+		}
+		//car 2
+		drawCar(player2);
+		if (player2.energyReserve>0){
+			stepT(player2);
+			selfDrive(player2);
+		}
+		else {
+			player2.speed=0;
+			player2.energyReserve=0;
+		}
 	}
-	else {
-		player1.speed=0;
-		player1.energyReserve=0;
-	}
-	//car 2
-	drawCar(player2);
-	if (player2.energyReserve>0){
-		stepT(player2);
-		selfDrive(player2);
-	}
-	else {
-		player2.speed=0;
-		player2.energyReserve=0;
-	}
-	
 	window.requestAnimationFrame(frame);
-
 }
-
+//initalize player 1
 player1.offset=0; //lane 1
+player1.img.src='car1.png'; 
+player1.speed=.009; 
+player1.logo.src='wildcats.png';
+//initialize player 2
 player2.offset=20;//lane 2
-//player3.offset=40;//lane 3
+player2.img.src='car2.png';
 player2.speed=.005;
+player2.logo.src='vikings.png';
+//player3.offset=40;//lane 3
 frame();
-
