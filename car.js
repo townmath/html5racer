@@ -1,4 +1,3 @@
-
 function Car () {
 	this.img = new Image();   // Create new img element
 	this.img.onload = function(){
@@ -6,6 +5,11 @@ function Car () {
 	};
 	this.img.src = 'car.png'; // Set source path
 
+	this.logo = new Image(); // Create new logo element
+	this.logo.onload = function(){
+	  // execute drawImage statements here
+	};
+	this.logo.src = 'greenbutton.jpg'; // default logo is green button logo
 	// collision
 	this.collisions = {
 		top: new CollisionPoint(this, 0),
@@ -15,22 +19,26 @@ function Car () {
 	};
 }
 Car.prototype = {
-	x: 670,
-	y: 370,
+	x: 730,
+	y: 385,
 	code: 'player',
 	acceleration: 1.1,
 	rotationStep: 4,
 	rotation: 270,
-	speed: 0,
+	speed: .009,
 	speedDecay: 0.98,
 	maxSpeed: 4,
 	backSpeed: 1.1,
-	energyReserve: 10000,
+	energyReserve: 7000,
 	segment: 1,
+	time: 0,
+	offset: 0, //offset allows the cars to be in different lanes
+	distance: 0,
+	curve: 0,
 
 
 	isMoving: function (speed) {
-		this.getSegment();
+		//this.getSegment();
 
 		if (this.speed > 2) {
 			this.energyReserve = this.energyReserve - 10;
