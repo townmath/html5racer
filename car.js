@@ -5,6 +5,11 @@ function Car () {
 	};
 	this.img.src = 'car.png'; // Set source path
 
+	this.logo = new Image(); // Create new logo element
+	this.logo.onload = function(){
+	  // execute drawImage statements here
+	};
+	this.logo.src = 'greenbutton.jpg'; // default logo is green button logo
 	// collision
 	this.collisions = {
 		top: new CollisionPoint(this, 0),
